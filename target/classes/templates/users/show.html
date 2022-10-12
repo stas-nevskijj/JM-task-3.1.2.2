@@ -7,7 +7,7 @@
 <body>
 
 <div>
-  <p th:text="${'Id: ' + user.getId() + ', ' + 'username: ' + user.getUsername() + ', ' + 'age: ' + user.getAge()}">VALUE</p>
+   <p th:text="${'Id: ' + user.getId() + ', ' + 'username: ' + user.getUsername() + ', ' + 'age: ' + user.getAge()}">VALUE</p>
 </div>
 
 <a th:href="@{/admin/{id}/edit(id=${user.getId()})}">Edit</a>
@@ -15,6 +15,10 @@
 <form th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}">
     <input type="submit" value="Delete"/>
 </form>
+
+<hr>
+
+<a href="/logout">Logout!</a>
 
 </body>
 </html>
