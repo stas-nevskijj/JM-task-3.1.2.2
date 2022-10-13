@@ -6,29 +6,26 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.UsersRepository;
-import ru.kata.spring.boot_security.demo.services.UserService;
+import ru.kata.spring.boot_security.demo.services.UserDetailService;
 
 import java.security.Principal;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    private UserService userService;
-    private UsersRepository usersRepository;
+    private UserDetailService userDetailService;
 
     @Autowired
-    public UserController(UserService userService, UsersRepository usersRepository) {
-        this.userService = userService;
-        this.usersRepository = usersRepository;
+    public UserController(UserDetailService userDetailService) {
+        this.userDetailService = userDetailService;
     }
+
     @GetMapping
     public String show(Principal principal, Model model) {
         String name = principal.getName();
-        Optional<User> user = usersRepository.findByUsername(name);
-        model.addAttribute("user", user.get());
+        User user = userDetailService.loadUserByUsername(name).get();
+        model.addAttribute("user", user);
         return "user";
     }
 }
